@@ -1,0 +1,9 @@
+{
+	"name": "Tail file",
+	"version": "0.1",
+	"description": "Tails a file and sends the data through a socket",
+	"main": "chunked.js",
+	"dependencies": {
+		"socket.io": ">= 0.9.12"
+	}
+}

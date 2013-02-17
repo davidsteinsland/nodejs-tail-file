@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Node.js + Socket.io + tail file</title>
+		<meta charset="utf-8" />
+
+		<script src="http://localhost:8000/socket.io/socket.io.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+		<script>
+		$(function ()
+		{
+			var socket = io.connect('http://localhost:8000'),
+				$status = $('p#status'),
+				$tail = $('ul#tail');
+
+			socket.on ('connect', function ()
+			{
+				$status.html ("Socket connected");
+			});
+			socket.on ('error', function (error)
+			{
+				$status.html ( "Error: " + error );
+			});
+
+			socket.on ('data', function (data)
+			{
+				$.each (data.lines, function (key, line)
+				{
+					if ( line.length == 0 )
+						return;
+					$tail.append ('<li>' + line + '</li>');		
+				});
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<h1>Tail file</h1>
+		
+		<p id="status"></p>
+		
+		<div id="tail-output">
+			<ul id="tail">
+			</ul>
+		</div>
+	</body>
+</html>
